@@ -7,7 +7,6 @@ MAC_PATTERN = re.compile(r'^[0-9A-F]{2}([-:])(?:[0-9A-F]{2}\1){4}[0-9A-F]{2}$')
 
 
 def load_vendors(file_name):
-    """Читает файл и возвращает словарь {префикс: производитель}."""
     vendors = {}
     with open(file_name, encoding='utf-8') as f:
         for line in f:
@@ -20,7 +19,6 @@ def load_vendors(file_name):
 
 
 def find_vendor(mac, vendors):
-    """Возвращает название производителя или None, если префикса нет в списке."""
     prefix = mac.upper()[:8].replace('-', '').replace(':', '')
     return vendors.get(prefix)
 
@@ -31,10 +29,10 @@ while True:
     mac = input('Введите MAC-адрес в формате F0-79-59-70-A7-20: ').strip().upper()
     if MAC_PATTERN.match(mac):
         break
-    print('Неверный формат, попробуйте ещё раз.')
+    print('Неверный формат, попробуйте ещё раз')
 
 vendor = find_vendor(mac, vendors)
 if vendor:
     print('Производитель:', vendor)
 else:
-    print('Производитель не найден: префикса', mac[:8], 'нет в списке.')
+    print('Производитель не найден: префикса', mac[:8], 'нет в списке')
