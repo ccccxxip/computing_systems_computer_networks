@@ -1,0 +1,11 @@
+check process nginx with pidfile /var/run/nginx.pid
+    start program = "/usr/sbin/service nginx start"
+    stop program  = "/usr/sbin/service nginx stop"
+
+    if does not exist then exec "/usr/local/bin/monit2telegram.sh Nginx_down_restarting"
+    if does not exist then restart
+    
+    if failed host 127.0.0.1 port 80 protocol http then exec "/usr/local/bin/monit2telegram.sh Nginx_http_failed"
+    if failed host 127.0.0.1 port 80 protocol http then restart
+
+    if 5 restarts within 5 cycles then timeout
